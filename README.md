@@ -122,8 +122,8 @@ people has not been measured on the free plan; the paid plan ($5 a month) lifts 
 
 ## License
 
-It's free, and can be used for any non-commercial use: setting it up for your own family, a community, a school or a
-charity, changing it as you like, and sharing it with others on the same terms. The terms are the
+It's free, and can be used for any non-commercial use: setting it up for your own family,
+changing it as you like, and sharing it with other families on the same terms. The terms are the
 [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
 (`LICENSE.md`), with the notice in `NOTICE`.
 

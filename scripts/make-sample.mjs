@@ -67,6 +67,33 @@ person('Tzipora', 'צפורה', 'f', ['Katz', 'כץ'], 5787, { parents: couples.
 couple(find('Levi', 'Rosenfeld'), person('Rivky', 'רבקי', 'f', FAMILY, 5763, { maiden: 'Klein' }), 5787);
 Object.assign(couple(find('Dina', 'Rosenfeld'), person('Yisroel', 'ישראל', 'm', ['Mandel', 'מנדל'], 5761), 5787), { engaged: true, venue: 'Ateres Simcha Hall' });
 
+// Newer households, added to the tree by someone but not filled in yet: no photos, and some without
+// a birthday or contact details. "Complete the Family" lists them.
+const KATZ = ['Katz', 'כץ'], WEISS = ['Weiss', 'וייס'];
+const NOPHOTO = new Set();
+const fresh = (...a) => { const x = person(...a); NOPHOTO.add(x.id); return x; };
+{
+  const gitty = fresh('Gitty', 'גיטי', 'f', FAMILY, 5756, { maiden: 'Brody', phone: null, email: null });
+  const c = couple(find('Binyamin', 'Rosenfeld'), gitty, 5778);
+  fresh('Yechiel', 'יחיאל', 'm', FAMILY, 5781, { parents: c.id });
+  fresh('Chavi', 'חווי', 'f', FAMILY, 5784, { parents: c.id, h_day: null, h_month: null, h_year: null });
+}
+{
+  const esty = fresh('Esty', 'אסתי', 'f', WEISS, 5760, { maiden: 'Gross', h_day: null, h_month: null, h_year: null });
+  couple(find('Naftali', 'Weiss'), esty, 5782);
+}
+{
+  const batsheva = fresh('Batsheva', 'בת שבע', 'f', KATZ, 5757, { maiden: 'Adler', city: null, email: null });
+  const c = couple(find('Yosef', 'Katz'), batsheva, 5779);
+  fresh('Avigail', 'אביגיל', 'f', KATZ, 5785, { parents: c.id });
+  fresh('Meir', 'מאיר', 'm', KATZ, 5783, { parents: c.id, h_day: null, h_month: null, h_year: null });
+}
+// And a few gaps in profiles that are otherwise filled in.
+NOPHOTO.add(find('Aharon', 'Katz').id);
+NOPHOTO.add(find('Eliyahu', 'Weiss').id);
+Object.assign(find('Leah', 'Rosenfeld'), { city: null, phone: null, email: null });
+Object.assign(find('Shimon', 'Rosenfeld'), { h_day: null, h_month: null, h_year: null });
+
 const q = (v) => (v === null || v === undefined ? 'NULL' : typeof v === 'number' ? v : typeof v === 'boolean' ? Number(v) : `'${String(v).replace(/'/g, "''")}'`);
 const PCOLS = ['id', 'he_first', 'he_full', 'en_first', 'he_last', 'en_last', 'sex', 'maiden', 'h_day', 'h_month', 'h_year', 'd_day', 'd_month', 'd_year', 'deceased', 'city', 'phone', 'email'];
 const CCOLS = ['id', 'a', 'b', 'w_day', 'w_month', 'w_year', 'engaged', 'venue'];
@@ -77,5 +104,5 @@ const lines = [
   ...people.filter((p) => p.parents).map((p) => `UPDATE people SET parents = ${q(p.parents)} WHERE id = ${q(p.id)};`),
 ];
 writeFileSync(new URL('../db/seed.sql', import.meta.url), `${lines.join('\n')}\n`);
-writeFileSync(new URL('../data/family.json', import.meta.url), `${JSON.stringify({ people: people.map((p) => ({ ...p, photo: existsSync(new URL(`../public/people/${p.id}.jpg`, import.meta.url)) ? `/people/${p.id}.jpg` : null })), couples, edits: [] }, null, 1)}\n`);
+writeFileSync(new URL('../data/family.json', import.meta.url), `${JSON.stringify({ people: people.map((p) => ({ ...p, photo: !NOPHOTO.has(p.id) && existsSync(new URL(`../public/people/${p.id}.jpg`, import.meta.url)) ? `/people/${p.id}.jpg` : null })), couples, edits: [] }, null, 1)}\n`);
 console.log(`${people.length} people, ${couples.length} couples; first child: ${people[2].en_first} ${people[2].id}`);

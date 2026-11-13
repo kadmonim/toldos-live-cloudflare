@@ -9,7 +9,7 @@ import { t } from './i18n.js';
 
 // The demo keeps its copy under its own name, with a number: raise the number whenever the demo
 // family changes (data/family.json, src/demo.js), so a visitor's older copy is replaced.
-const LS = import.meta.env.VITE_DEMO === '1' ? 'tree.demo.v3' : 'tree.data.v2';
+const LS = import.meta.env.VITE_DEMO === '1' ? 'tree.demo.v4' : 'tree.data.v2';
 if (import.meta.env.VITE_DEMO === '1') { try { localStorage.removeItem('tree.data.v2'); } catch {} }
 const ME = 'tree.me';
 // Who you are is kept in localStorage and, on the live site, in a long-lived cookie set by the

@@ -154,9 +154,8 @@ To add a family:
      `rosenfeld.ourfamily.app`, `segal.ourfamily.app`, and so on. One domain to pay for, and as
      many families as you like.
 
-   You can buy the domain in the Cloudflare dashboard (Domain Registration), at cost, usually
-   about $10–20 a year for `.com` or `.app`. Then, under the Worker's **Settings → Domains &
-   Routes**, add each address, and put it in that family's `hosts` in `families.mjs`.
+   You can buy the domain in the Cloudflare dashboard (Domain Registration), or anywhere else.
+   Then, under the Worker's **Settings → Domains & Routes**, add each address, and put it in that family's `hosts` in `families.mjs`.
 4. **Its own password** (optional): `npx wrangler secret put APP_PASSWORD_SEGAL` (the key in
    capitals). Without it, the family uses the shared `APP_PASSWORD`. A login on one family's site
    doesn't open another's.

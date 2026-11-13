@@ -39,13 +39,28 @@ badge: Cloudflare.
 SQLite and Postgres are different databases, so switching versions later means copying the data
 across (an AI assistant can do that with you); choosing well at the start saves that.
 
+## First: your own copy
+
+Everything starts with your own copy of this repository, in your own GitHub account
+([a free account](https://github.com/signup) is enough). Your family's name and settings will go
+into it, so make it **private**:
+
+1. At the top of this repository's page on GitHub, press **Use this template → Create a new
+   repository**.
+2. Give it a name (e.g. `our-family-tree`), choose **Private**, and create it.
+3. Get it onto your computer: `git clone https://github.com/<you>/<name>.git` (or GitHub's
+   **Code → Download ZIP**).
+
+Your copy is yours: changes you make there stay there. This repository doesn't change it.
+(The family's details themselves are never in the code: they're in the database.)
+
 ## The easy way: let Claude Code set it up
 
 You don't need to know how any of this works. Setting this site up is also a good first project
 for getting to know [Claude Code](https://claude.com/claude-code), an AI assistant that works in
 your terminal:
 
-1. Download this repository and open its folder in Claude Code.
+1. Make [your own copy](#first-your-own-copy) and open its folder in Claude Code.
 2. Say something like:
 
    > Read the README and set this site up on my Cloudflare account, step by step. Tell me what
@@ -79,6 +94,8 @@ npm run cf:dev
 The password is the one in `.dev.vars`.
 
 ## Put it online
+
+Run these in the folder of [your own copy](#first-your-own-copy), after `npm install`:
 
 1. Create a Cloudflare account and log in from the terminal: `npx wrangler login`
 2. Create the database: `npx wrangler d1 create family-tree`

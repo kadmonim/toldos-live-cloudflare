@@ -11,9 +11,11 @@ It runs on one free [Cloudflare](https://cloudflare.com) account: the site, the 
 photos. It starts with an invented family, the Rosenfelds (32 people; nobody in it is real, and their portraits are AI-generated), which you
 replace with your own.
 
-**Try the demo: https://toldos-live.netlify.app** — an invented family, running entirely in
-your browser. Nothing you change there is saved anywhere else; "Start over" at the bottom of a
-page puts it back. (Build your own with `npm run build:demo`: plain files for any static host.)
+**Try the demo: https://toldos-live.netlify.app** (password: `toldos`) — an invented family,
+running entirely in your browser. Nothing you change there is saved anywhere else; "Start over" at
+the bottom of a page puts it back. The demo's password is only there to show what it's like: your
+real site opens with a password you choose and share with your family, checked on the server.
+(Build a demo of your own with `npm run build:demo`: plain files for any static host.)
 
 This repository (`toldos-live-cloudflare`) is the version for Cloudflare. A version for Netlify
 with a Neon database may follow as a separate repository.

@@ -20,6 +20,10 @@ const myId = () => localStorage.getItem(ME) ?? meCookie();
  *  the visitor's browser from the sample family, like the local preview. Nothing is shared or saved
  *  anywhere else, so there is nothing to protect or reset. */
 export const DEMO = import.meta.env.VITE_DEMO === '1';
+/** The demo still asks for a password, to show what a real family site looks like; it's shown on
+ *  the login screen. Checked in the browser only: there is nothing behind it to protect. */
+export const DEMO_PASSWORD = 'toldos';
+const DEMO_IN = 'tree.demo.in';
 
 async function loadLocal() {
   const saved = localStorage.getItem(LS);
@@ -104,6 +108,7 @@ export const api = {
   async load() {
     let res;
     if (DEMO) {
+      if (!localStorage.getItem(DEMO_IN)) throw Object.assign(new Error('login'), { login: true });
       this.mode = 'local';
       const data = await loadLocal();
       data.recent ??= [];
@@ -251,12 +256,14 @@ export const api = {
   resetDemo() {
     localStorage.removeItem(LS);
     localStorage.removeItem(ME);
+    localStorage.removeItem(DEMO_IN);
     sessionStorage.clear();
   },
 
   /** Ends the session and forgets who you are on this device. */
   async logout() {
     localStorage.removeItem(ME);
+    if (DEMO) localStorage.removeItem(DEMO_IN);
     sessionStorage.clear();
     if (this.mode === 'server') await fetch('/api/logout', { method: 'POST' }).catch(() => {});
   },
@@ -274,6 +281,11 @@ export const api = {
   },
 
   async login(password) {
+    if (DEMO) {
+      const ok = password.trim().toLowerCase() === DEMO_PASSWORD;
+      if (ok) localStorage.setItem(DEMO_IN, '1');
+      return ok;
+    }
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },

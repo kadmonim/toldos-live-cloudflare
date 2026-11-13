@@ -354,6 +354,7 @@ const S = {
   madeOn: [(d) => `הופק ב${d}`, (d) => `Made on ${d}`],
   demoNote: ['זו הדגמה עם משפחה בדויה: השינויים נשמרים רק בדפדפן הזה.', 'This is a demo with an invented family: changes are kept in this browser only.'],
   demoReset: ['להתחיל מחדש', 'Start over'],
+  demoPassword: [(p) => `זו הדגמה. אתר אמיתי של משפחה נפתח בסיסמה משותפת; כאן הסיסמה היא: <b dir="ltr">${p}</b>`, (p) => `This is a demo. A real family site opens with a password the family shares; here it is: <b>${p}</b>`],
   localNote: ['תצוגה מקומית: השינויים נשמרים רק בדפדפן הזה.', 'Local preview: changes are kept in this browser only.'],
 };
 

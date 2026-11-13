@@ -1,4 +1,4 @@
-import { api, DEMO } from './api.js';
+import { api, DEMO, DEMO_PASSWORD } from './api.js';
 import { t, getLang, otherLang, setLang, setFamily } from './i18n.js';
 import { familyOfHost, adminOf } from '../server/lib/families.mjs';
 import { HDate, ADAR, LEAP_REF, pickerMonths, monthForYear, monthName, dayName, formatDate, fromCivil, upcoming, inYear, monthsOfYear } from './hebrew.js';
@@ -2256,6 +2256,7 @@ async function login() {
   dlg.innerHTML = `<form method="dialog" class="sheet-form">
     <h2>🌳 ${t('treeOf', getLang(), t('appName'))}</h2>
     <p>${t('loginText')}</p>
+    ${DEMO ? `<p class="demo-pass">${t('demoPassword', getLang(), DEMO_PASSWORD)}</p>` : ''}
     <input type="password" name="password" autocomplete="current-password" required autofocus aria-label="Password" />
     <p class="err" hidden>${t('loginWrong')}</p>
     <button class="cta small">${t('loginBtn')}</button>

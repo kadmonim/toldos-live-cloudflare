@@ -100,7 +100,7 @@ const CCOLS = ['id', 'a', 'b', 'w_day', 'w_month', 'w_year', 'engaged', 'venue']
 const lines = [
   '-- The invented sample family (scripts/make-sample.mjs writes this file). Nobody here is a real person.',
   ...people.map((p) => `INSERT INTO people (${PCOLS.join(', ')}) VALUES (${PCOLS.map((k) => q(p[k])).join(', ')});`),
-  ...couples.map((c) => `INSERT INTO couples (${CCOLS.join(', ')}, is_root) VALUES (${CCOLS.map((k) => q(c[k])).join(', ')}, ${Number(c.root)});`),
+  ...couples.map((c) => `INSERT INTO couples (${CCOLS.join(', ')}, is_root) VALUES (${CCOLS.map((k) => q(k === 'engaged' ? Boolean(c[k]) : c[k])).join(', ')}, ${Number(c.root)});`),
   ...people.filter((p) => p.parents).map((p) => `UPDATE people SET parents = ${q(p.parents)} WHERE id = ${q(p.id)};`),
 ];
 writeFileSync(new URL('../db/seed.sql', import.meta.url), `${lines.join('\n')}\n`);

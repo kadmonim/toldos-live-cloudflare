@@ -17,8 +17,9 @@ the bottom of a page puts it back. The demo's password is only there to show wha
 real site opens with a password you choose and share with your family, checked on the server.
 (Build a demo of your own with `npm run build:demo`: plain files for any static host.)
 
-This repository (`toldos-live-cloudflare`) is the version for Cloudflare. A version for Netlify
-with a Neon database may follow as a separate repository.
+This repository (`toldos-live-cloudflare`) is the version for Cloudflare. The same site for
+Netlify (with Netlify's database or Neon) is
+[toldos-live-netlify](https://github.com/kadmonim/toldos-live-netlify).
 
 ## The easy way: let Claude Code set it up
 

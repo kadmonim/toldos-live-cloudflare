@@ -8,7 +8,7 @@ birthday calendar as PDF. Hebrew and English.
 **It's free, and can be used for any non-commercial use** (see [License](#license)).
 
 It runs on one free [Cloudflare](https://cloudflare.com) account: the site, the database and the
-photos. It starts with an invented family, the Rosenfelds (32 people; nobody in it is real, and their portraits are AI-generated), which you
+photos. It starts with an invented family, the Rosenfelds (35 people; nobody in it is real, and their portraits are AI-generated), which you
 replace with your own.
 
 **Try the demo: https://toldos-live.netlify.app** (password: `toldos`) — an invented family,

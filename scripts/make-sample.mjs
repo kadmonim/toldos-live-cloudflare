@@ -60,9 +60,16 @@ for (const [en, he, sex, sEn, sHe, last, year, wifeMaiden, kids] of branches) {
   });
 }
 
+// The newest generation, for the demo's "Mazal tov" (src/demo.js moves their dates close to the
+// day the demo is opened): a new baby, a couple just married, and a couple engaged.
+const find = (en, last) => people.find((p) => p.en_first === en && p.en_last === last);
+person('Tzipora', 'צפורה', 'f', ['Katz', 'כץ'], 5787, { parents: couples.find((c) => c.a === find('Moshe', 'Katz').id).id });
+couple(find('Levi', 'Rosenfeld'), person('Rivky', 'רבקי', 'f', FAMILY, 5763, { maiden: 'Klein' }), 5787);
+Object.assign(couple(find('Dina', 'Rosenfeld'), person('Yisroel', 'ישראל', 'm', ['Mandel', 'מנדל'], 5761), 5787), { engaged: true, venue: 'Ateres Simcha Hall' });
+
 const q = (v) => (v === null || v === undefined ? 'NULL' : typeof v === 'number' ? v : typeof v === 'boolean' ? Number(v) : `'${String(v).replace(/'/g, "''")}'`);
 const PCOLS = ['id', 'he_first', 'he_full', 'en_first', 'he_last', 'en_last', 'sex', 'maiden', 'h_day', 'h_month', 'h_year', 'd_day', 'd_month', 'd_year', 'deceased', 'city', 'phone', 'email'];
-const CCOLS = ['id', 'a', 'b', 'w_day', 'w_month', 'w_year'];
+const CCOLS = ['id', 'a', 'b', 'w_day', 'w_month', 'w_year', 'engaged', 'venue'];
 const lines = [
   '-- The invented sample family (scripts/make-sample.mjs writes this file). Nobody here is a real person.',
   ...people.map((p) => `INSERT INTO people (${PCOLS.join(', ')}) VALUES (${PCOLS.map((k) => q(p[k])).join(', ')});`),

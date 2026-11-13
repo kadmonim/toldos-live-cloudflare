@@ -30,7 +30,7 @@ async function loadLocal() {
   if (saved) return JSON.parse(saved);
   // The demo build carries the sample family inside it; the dev server serves the file.
   const res = DEMO ? null : await fetch('/data/family.json').catch(() => null);
-  const data = DEMO ? structuredClone((await import('../data/family.json')).default)
+  const data = DEMO ? (await import('./demo.js')).liven(structuredClone((await import('../data/family.json')).default))
     : res?.ok && (res.headers.get('content-type') ?? '').includes('json')
     ? await res.json() : { people: [], couples: [], edits: [] };
   localStorage.setItem(LS, JSON.stringify(data));

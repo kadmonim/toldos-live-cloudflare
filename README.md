@@ -5,6 +5,8 @@ Hebrew birthdays, photos, city, phone and email, spouse and children. It shows u
 anniversaries and yahrzeits, has a "Who's this?" photo quiz, and prints a family book and a
 birthday calendar as PDF. Hebrew and English.
 
+**It's free, and can be used for any non-commercial use** (see [License](#license)).
+
 It runs on one free [Cloudflare](https://cloudflare.com) account: the site, the database and the
 photos. It starts with an invented family, the Rosenfelds (32 people; nobody in it is real, and their portraits are AI-generated), which you
 replace with your own.
@@ -120,7 +122,7 @@ people has not been measured on the free plan; the paid plan ($5 a month) lifts 
 
 ## License
 
-Free for any noncommercial use: setting it up for your own family, a community, a school or a
+It's free, and can be used for any non-commercial use: setting it up for your own family, a community, a school or a
 charity, changing it as you like, and sharing it with others on the same terms. The terms are the
 [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
 (`LICENSE.md`), with the notice in `NOTICE`.

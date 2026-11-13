@@ -1,0 +1,19 @@
+// Cloudflare's settings for this site: one Worker (worker/index.mjs) that serves the built page
+// from dist/, with a D1 database (DB) and an R2 bucket (FILES) for photos and backups.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "family-tree",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2025-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    // Only the page, the manifest and the API go through the Worker; other files are served directly.
+    "run_worker_first": ["/", "/index.html", "/site.webmanifest", "/api/*"]
+  },
+  "d1_databases": [{ "binding": "DB", "database_name": "family-tree", "database_id": "PUT-YOUR-DATABASE-ID-HERE" }],
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "family-tree" }],
+  "triggers": { "crons": ["0 0 * * *"] },   // the nightly database backup, 00:00 UTC
+  "observability": { "enabled": true }
+}

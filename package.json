@@ -1,0 +1,27 @@
+{
+  "name": "toldos-live-cloudflare",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "cf:dev": "vite build && wrangler dev",
+    "deploy": "vite build && wrangler deploy",
+    "db:local": "wrangler d1 execute DB --local --file db/schema.sql && wrangler d1 execute DB --local --file db/seed.sql",
+    "db:remote": "wrangler d1 execute DB --remote --file db/schema.sql && wrangler d1 execute DB --remote --file db/seed.sql",
+    "build:demo": "VITE_DEMO=1 vite build"
+  },
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "description": "Family tree: find yourself, fill in birthdays, photos and contact details. Runs on Cloudflare (Workers, D1, R2).",
+  "type": "module",
+  "dependencies": {
+    "@hebcal/core": "^6.14.7",
+    "bidi-js": "^1.1.0",
+    "fflate": "^0.8.3",
+    "jspdf": "^4.2.1"
+  },
+  "devDependencies": {
+    "vite": "^7.3.7",
+    "wrangler": "^4.86.0"
+  }
+}

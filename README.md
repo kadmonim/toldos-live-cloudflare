@@ -146,8 +146,17 @@ To add a family:
    `node -e "console.log(crypto.randomUUID())"`.)
 2. **Add the family to `server/lib/families.mjs`**: its `key`, its names, its first language, the
    new couple's id as `root`, and its address in `hosts`.
-3. **Give it an address**: in the Cloudflare dashboard, add a domain (or a subdomain, such as
-   `segal.yourfamily.com`) to the Worker. A `workers.dev` address can show only one family.
+3. **Give it an address.** A free `workers.dev` address can show only one family, so the others
+   need a domain. Two ways to go about it:
+   - **A domain for each family**: `rosenfeld.app` for one side, `segal.app` for the other. Each
+     family gets a short address of its own name.
+   - **One domain, a subdomain for each family**: buy one, like `ourfamily.app`, and use
+     `rosenfeld.ourfamily.app`, `segal.ourfamily.app`, and so on. One domain to pay for, and as
+     many families as you like.
+
+   You can buy the domain in the Cloudflare dashboard (Domain Registration), at cost, usually
+   about $10–20 a year for `.com` or `.app`. Then, under the Worker's **Settings → Domains &
+   Routes**, add each address, and put it in that family's `hosts` in `families.mjs`.
 4. **Its own password** (optional): `npx wrangler secret put APP_PASSWORD_SEGAL` (the key in
    capitals). Without it, the family uses the shared `APP_PASSWORD`. A login on one family's site
    doesn't open another's.

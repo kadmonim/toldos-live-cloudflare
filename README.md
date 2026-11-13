@@ -85,8 +85,8 @@ Routes). Nothing in the code needs the address.
 ## Make it yours
 
 - **Family name and first language**: `server/lib/families.mjs` (the one entry there).
-- **Your own family instead of the sample**: skip `db/seed.sql` and start from a top couple —
-  the couple everyone in the tree descends from. In `db/seed.sql`, keep only two people and one
+- **Your own family instead of the invented one**: skip `db/seed.sql` and start from a top
+  couple (see [Choosing the top couple](#choosing-the-top-couple)). In `db/seed.sql`, keep only two people and one
   couple with `is_root` = 1, with your names; everyone else is added in the app. The top of the
   tree is only ever changed in the database: the app has no "add parents" button, on purpose.
 - **Link preview picture** (what WhatsApp shows for a shared link): put a 1200×630 image in
@@ -99,6 +99,63 @@ Routes). Nothing in the code needs the address.
 - **`complete: true`** in `families.mjs`, once all the top couple's children are in: nobody can
   then be added as their child by mistake.
 - **An Events tab** linking to a family calendar: build with `VITE_CALENDAR_URL` set.
+
+## Choosing the top couple
+
+Everything starts from one couple at the top: the site shows them, all their descendants, and
+those descendants' husbands and wives. Nothing else is needed to decide who belongs.
+
+- **Your grandparents** are the usual choice: the site then holds your parents, uncles and aunts,
+  and all your first cousins and their families. That's a family that knows each other.
+- **Your great-grandparents** bring in your parents' cousins and their families: a much bigger
+  tree, and many people who don't know each other well.
+- **Your parents** give a small tree: you, your brothers and sisters, and their families.
+
+Pick the highest couple whose whole family you'd want on one site. Do it at the start: the app has
+no "add parents" button, on purpose, so the top is only ever changed in the database.
+
+## More than one family
+
+Everyone has more than one family: your father's side, your mother's side, and once you're
+married, your husband's or wife's side. One installation can serve them all, each as its own site
+with its own address and password, from the same database:
+
+- **Each family is a top couple.** Your father's parents are one, your mother's parents another.
+  Your parents are in both: in the first as a child, in the second as a husband or wife.
+- **A married couple belongs to both their families.** Your household (you, your spouse, your
+  children) shows on your side's site and on your spouse's side's site, and it's the same record:
+  a birthday or photo filled in on one site shows on the other.
+- **Each site shows only its own family.** Someone on your wife's family's site sees her family,
+  not yours.
+
+To add a family:
+
+1. **Put in its top couple**, and connect the person who links the two trees to them. For example,
+   to add Chaya Rosenfeld's side (she was born Segal), insert her parents as a couple and set her
+   `parents` to that couple:
+
+   ```sql
+   INSERT INTO people (id, he_first, en_first, he_last, en_last, sex) VALUES
+     ('<new id 1>', 'משה', 'Moshe', 'סגל', 'Segal', 'm'),
+     ('<new id 2>', 'רחל', 'Rochel', 'סגל', 'Segal', 'f');
+   INSERT INTO couples (id, a, b) VALUES ('<new couple id>', '<new id 1>', '<new id 2>');
+   UPDATE people SET parents = '<new couple id>' WHERE id = '<Chaya''s id>';
+   ```
+
+   (`npx wrangler d1 execute DB --remote --command "…"`; ids are any new UUIDs, e.g. from
+   `node -e "console.log(crypto.randomUUID())"`.)
+2. **Add the family to `server/lib/families.mjs`**: its `key`, its names, its first language, the
+   new couple's id as `root`, and its address in `hosts`.
+3. **Give it an address**: in the Cloudflare dashboard, add a domain (or a subdomain, such as
+   `segal.yourfamily.com`) to the Worker. A `workers.dev` address can show only one family.
+4. **Its own password** (optional): `npx wrangler secret put APP_PASSWORD_SEGAL` (the key in
+   capitals). Without it, the family uses the shared `APP_PASSWORD`. A login on one family's site
+   doesn't open another's.
+5. `npm run deploy`
+
+The family then grows from its site: brothers, sisters, husbands, wives and children are all added
+in the app. Claude Code can do all of these steps with you: tell it which family to add and who
+connects it to the tree.
 
 ## How it's built
 
